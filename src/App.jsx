@@ -1,28 +1,40 @@
-import { useState } from 'react'
+import React, { useEffect } from 'react';
+import Navbar from './components/Navbar';
+import Hero from './components/Hero';
+import EventHighlights from './components/EventHighlights';
+import AuthSections from './components/AuthSections';
 
-function App() {
-  const [count, setCount] = useState(0)
+const App = () => {
+  // Inject Bootstrap via CDN so Bootstrap utility and component classes work
+  useEffect(() => {
+    const bsLink = document.createElement('link');
+    bsLink.rel = 'stylesheet';
+    bsLink.href = 'https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css';
+    bsLink.integrity = 'sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH';
+    bsLink.crossOrigin = 'anonymous';
+
+    const bsScript = document.createElement('script');
+    bsScript.src = 'https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js';
+    bsScript.integrity = 'sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz';
+    bsScript.crossOrigin = 'anonymous';
+
+    document.head.appendChild(bsLink);
+    document.body.appendChild(bsScript);
+
+    return () => {
+      document.head.removeChild(bsLink);
+      document.body.removeChild(bsScript);
+    };
+  }, []);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-50 to-blue-50 flex items-center justify-center">
-      <div className="bg-white p-8 rounded-lg shadow-lg">
-        <h1 className="text-3xl font-bold text-gray-800 mb-4">
-          Vibe Coding Platform
-        </h1>
-        <p className="text-gray-600 mb-6">
-          Your AI-powered development environment
-        </p>
-        <div className="text-center">
-          <button
-            onClick={() => setCount(count + 1)}
-            className="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded"
-          >
-            Count is {count}
-          </button>
-        </div>
-      </div>
+    <div className="bg-light text-dark" style={{ minHeight: '100vh' }}>
+      <Navbar />
+      <Hero />
+      <EventHighlights />
+      <AuthSections />
     </div>
-  )
-}
+  );
+};
 
-export default App
+export default App;
